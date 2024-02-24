@@ -1,10 +1,19 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { SafeAreaView, StatusBar, Text, View } from 'react-native'
 
 const MainScreen = () => {
-  return (
-    <View><Text>MainScreen</Text></View>
-  )
+    return (
+    <SafeAreaView>
+        <StatusBar barStyle={'default'} />
+        <Text>ToDo App</Text>
+        <View>
+            <Text>To Do</Text>
+        </View>
+        <View>
+            <Text>Done</Text>
+        </View>
+    </SafeAreaView>
+    )
 }
 
 export default MainScreen
