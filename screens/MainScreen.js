@@ -1,5 +1,6 @@
 import React from 'react'
 import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import InputForm from '../components/InputForm'
 
 const MainScreen = () => {
     return (
@@ -13,6 +14,7 @@ const MainScreen = () => {
         <View style={styles.listView}>
             <Text style={styles.listTitle}>Done</Text>
         </View>
+        <InputForm/>
     </SafeAreaView>
     )
 }
