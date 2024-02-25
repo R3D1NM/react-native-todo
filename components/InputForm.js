@@ -1,14 +1,27 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import {addTodo} from '../redux/todo'
 
 const InputForm = () => {
+    const [currentValue, setCurrentValue] = useState("")
+    const dispatch = useDispatch()
+
+    const handleSubmit = () => { 
+        if(currentValue!==""){
+            dispatch(addTodo(currentValue))
+            setCurrentValue("")
+        }
+    }
+
     return (
     <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.addFormContainer}
     >
-        <TextInput style={styles.inputField} placeholder='what to do?'/>
-        <Pressable style={styles.addButton}>
+        <TextInput style={styles.inputField} placeholder='what to do?' value={currentValue} onChangeText={setCurrentValue} onSubmitEditing={handleSubmit}/>
+
+        <Pressable style={styles.addButton} onPress={handleSubmit}>
             <Text style={styles.addButtonText}>+</Text>
         </Pressable>
     </KeyboardAvoidingView>
