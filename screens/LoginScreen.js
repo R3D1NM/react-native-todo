@@ -1,23 +1,25 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import TodoIcon from '../assets/todo.svg'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import Toast from 'react-native-toast-message'
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const auth = getAuth()
     const handleLogin = async() => {  
-        try {
-            const user = await createUserWithEmailAndPassword(auth,email,password)
-            console.log(user);
-        } catch (error) {
-            console.log(error.message);
-        }
+
     }
 
     const handleSignUp = async() => { 
-
+        try {
+            const user = await createUserWithEmailAndPassword(auth,email,password)
+            Toast.show({type:"success",text1:"Success!",text2:`${email} is now registered`})
+        } catch (error) {
+            console.log(error.message);
+            Alert.alert("Something went wrong:)",error.message,[{text:"close", onPress: () => console.log('close')}],{cancelable: true})
+        }
     }
 
     return (
