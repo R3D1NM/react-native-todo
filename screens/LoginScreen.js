@@ -1,15 +1,33 @@
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TodoIcon from '../assets/todo.svg'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import Toast from 'react-native-toast-message'
+import { useNavigation } from '@react-navigation/native'
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const auth = getAuth()
-    const handleLogin = async() => {  
+    const navigation = useNavigation()
 
+    useEffect(() => {
+        onAuthStateChanged(auth, user => {
+            if(user){
+                navigation.replace("main")
+            }
+        })
+    }, [])
+    
+
+    const handleLogin = async() => {  
+        try {
+            const user = await signInWithEmailAndPassword(auth,email,password)
+            // console.log(user);
+        } catch (error) {
+            console.log(error);
+            Alert.alert("Login Failed :(",error.message,[{text:"close", onPress: () => console.log('close')}],{cancelable: true})
+        }
     }
 
     const handleSignUp = async() => { 
@@ -18,7 +36,7 @@ const LoginScreen = () => {
             Toast.show({type:"success",text1:"Success!",text2:`${email} is now registered`})
         } catch (error) {
             console.log(error.message);
-            Alert.alert("Something went wrong:)",error.message,[{text:"close", onPress: () => console.log('close')}],{cancelable: true})
+            Alert.alert("Sign Up Failed :(",error.message,[{text:"close", onPress: () => console.log('close')}],{cancelable: true})
         }
     }
 
