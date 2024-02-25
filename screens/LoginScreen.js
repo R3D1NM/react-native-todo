@@ -1,10 +1,25 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import TodoIcon from '../assets/todo.svg'
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const auth = getAuth()
+    const handleLogin = async() => {  
+        try {
+            const user = await createUserWithEmailAndPassword(auth,email,password)
+            console.log(user);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    const handleSignUp = async() => { 
+
+    }
+
     return (
     <View style={styles.container}>
         <TodoIcon/>
@@ -13,10 +28,10 @@ const LoginScreen = () => {
             <TextInput placeholder='password' value={password} onChangeText={setPassword} style={styles.input} secureTextEntry />
         </View>
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button,styles.buttonOutline]}>
+            <TouchableOpacity style={[styles.button,styles.buttonOutline]} onPress={handleSignUp}>
                 <Text style={[styles.buttonText,styles.buttonOutlineText]}>Sign Up</Text>
             </TouchableOpacity>
         </View>
