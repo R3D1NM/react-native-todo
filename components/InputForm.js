@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {addTodo} from '../redux/todo'
 
