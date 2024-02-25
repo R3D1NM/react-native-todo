@@ -25,7 +25,7 @@ const LoginScreen = () => {
             const user = await signInWithEmailAndPassword(auth,email,password)
             // console.log(user);
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             Alert.alert("Login Failed :(",error.message,[{text:"close", onPress: () => console.log('close')}],{cancelable: true})
         }
     }
